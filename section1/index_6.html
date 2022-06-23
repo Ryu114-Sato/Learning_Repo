@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app"><!-- 仮想DOM -->
+        {{ message }} <!-- dataを表示するには{{}}マスタッシュ構文が必要 -->
+    </div>
+Ï
+<script>
+　let app = new Vue({
+  el: '#app', //id="app" の範囲が仮装DOMとなる
+  data (){ 
+      return{
+        message: 'Hello Vue!'//dataの中に書いてある内容が、仮想DOMに表示される
+      }
+  }
+    })
+    const html = document.querySelector('html');
+    console.log(html);//DOMの中身を確認できる
+    console.log(app);//仮装DOMの中身を確認できる
+
+</script>
+
+<!--
+   Vueクラス⇨インスタンス化（実態）new
+    let app = new Vew({
+    el,
+    data はvewjs側であらかじめ準備された機能の事＝APIと呼ばれる
+        })
+  
+DOM : html をプログラムから操作できる仕組み
+
+
+-->
+
+</body>
+</html>
