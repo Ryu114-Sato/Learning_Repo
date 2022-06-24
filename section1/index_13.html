@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div v-show="isDisplay">表示</div>
+        <div v-show="!isDisplay">falseになっている</div>
+        <br>
+        <div v-if="isDisplay">ifで表示</div>
+        <br>
+        <div v-if="signal === 'red' ">赤</div>
+        <div v-else-if="signal === 'yellow' ">黄色</div>
+        <div v-else-if="signal === 'blue' ">青色</div>
+        <div v-else>赤青黄以外の色</div>
+    </div>
+    <script>
+        let app = new Vue({//vueインスタンス生成
+            el: '#app',
+            data() {
+                return {
+                    isDisplay: true,
+                    signal: 'yellow'
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <title>Document</title>
+    <style>
+        /*リアルDOMで使用するクラスを作成*/
+        .active {
+            border: 1px solid red;
+        }
+
+        .text-danger {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    リアルDOM
+    <div style="color:blue; font-size:20px">styleテスト</div>
+    <div class="active text-danger">classテスト</div>
+    <br>
+    仮想DOM
+    <div id="app">
+        <div style="" class=""></div>
+        <div :style="{fontSize:fontSize}">Styleテスト</div>
+        <div :class="{active:isActive}">classテスト</div>
+    </div>
+    <script>
+        let app = new Vue({//vueインスタンス生成
+            el: '#app',
+            data() {
+                return {
+                    //font-size:'20px' //ケバブケース（JSではNG)
+                    fontSize: '20px', //キャメルケースを使用する
+                    isActive: true //.isActiveがfalseの場合、付与されない
+                }
+            }
+
+        })
+
+    </script>
+
+</body>
+
+</html>
