@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <!-- 仮想DOM -->
+        {{ message }}
+        <br>
+        <a v-bind:href="google">googleへのリンク(仮想)</a>
+        <br>
+        <a :href="google">googleへのリンク(仮想：省略)</a>
+        <br>
+        オブジェクト.キー
+        <a :href="book.url">{{book.title}}</a>
+        <br>
+        <!--リアルDOM
+        <input :name="" :value="" :placeholder="">
+        -->
+        <br>
+        <input v-bind="{name:formInput.name, placeholder:formInput.placeholder}">
+        <br>
+        <!--上記を省略した書き方-->
+        <input v-bind="formInput">
+
+
+    </div>
+    <script>
+        let app = new Vue({
+            el: '#app', //仮装DOM
+            data() {//初期設定
+                return {
+                    message: 'Hello',//キー(key): 値(value)
+                    google: 'https://google.com',
+                    book: {//valueの中に更にキー(key): 値(value)を格納できる
+                        title: '本のタイトル',
+                        url: 'https://google.com'
+                    },
+                    formInput: {
+                        name: 'your_name',
+                        placeholder: 'お名前を入力してください'
+                    }
+                }
+            }
+        })
+
+    </script>
+
+    <!--
+   Vueクラス⇨インスタンス化（実態）new
+    let app = new Vew({
+    el,
+    data はvewjs側であらかじめ準備された機能の事＝APIと呼ばれる
+        })
+  
+DOM : html をプログラムから操作できる仕組み
+
+
+-->
+
+</body>
+
+</html>
