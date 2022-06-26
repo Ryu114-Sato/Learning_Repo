@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+
+  <body>
+    リアルDOM
+    <br />
+    <button onClick="btnClicked()">リアルボタン</button>
+    <button id="clickEvent" onClick="btnClicked()">リアルボタン(e)</button>
+    <br />
+    仮想DOM
+    <div id="app">
+      <button v-on:click="btnClicked1">仮想ボタン</button>
+      <button @click="btnClicked2">@仮想ボタン</button>
+      <!--イベントオブジェクトを表示-->
+      <button @click="btnClickedEvent">仮想ボタン(e)</button>
+      <!--引数を渡す-->
+      <button @click="btnClickedArgs(1)">仮想ボタン(Args)</button>
+      <!--引数とイベントオブジェクトを同時に-->
+      <button @click="btnClickedArgsEvent(1,$event)">
+        仮想ボタン(Args, $e)
+      </button>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data() {
+          return {};
+        },
+        methods: {
+          //Vuejsで書いた場合
+          btnClicked1() {
+            console.log("仮想ボタン がクリックされました");
+          },
+          btnClicked2() {
+            //v-onを省略した場合
+            console.log("@仮想ボタン がクリックされました");
+          },
+          //イベントオブジェクトを表示する場合
+          btnClickedEvent(e) {
+            console.log(e);
+          },
+          //引数を受け取る場合
+          btnClickedArgs(int) {
+            console.log(int);
+          },
+          //引数とイベントオブジェクトを表示する場合
+          btnClickedArgsEvent(int, e) {
+            console.log(int);
+            console.log(e);
+          },
+        },
+      });
+      //通常のJSで書いた場合
+      function btnClicked() {
+        console.log("リアルボタンがクリックされました");
+      }
+      //イベントオブジェクトを表示する場合
+      const clickEvent = document.getElementById("clickEvent");
+      clickEvent.addEventListener("click", (e) => {
+        console.log(e);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+
+  <body>
+    リアルDOM
+    <br />
+    <button onClick="btnClicked()">リアルボタン</button>
+    <button id="clickEvent" onClick="btnClicked()">リアルボタン(e)</button>
+    <br />
+    <!--Ajax : サーバーサイドで、全てのデータを取得しなくても
+      対象のデータのみ読み込んで表示する非同期通信と呼ばれおり、
+      ページを再読み込みしない。
+    -->
+    <form>
+      <button type="submit">送信</button>
+      <!--通信をする時に、ページを再度読み込んでしまう-->
+    </form>
+    <form>
+      <button id="prevent" type="submit">送信(prevent)</button>
+      <!--preventDefaultを使用し、ページを再読み込みしない-->
+    </form>
+
+    仮想DOM
+    <div id="app">
+      <button v-on:click="btnClicked1">仮想ボタン</button>
+      <button @click="btnClicked2">@仮想ボタン</button>
+      <!--イベントオブジェクトを表示-->
+      <button @click="btnClickedEvent">仮想ボタン(e)</button>
+      <!--引数を渡す-->
+      <button @click="btnClickedArgs(1)">仮想ボタン(Args)</button>
+      <!--引数とイベントオブジェクトを同時に-->
+      <button @click="btnClickedArgsEvent(1,$event)">
+        仮想ボタン(Args, $e)
+      </button>
+      <form>
+        <button @click="btnClicked2">@仮想ボタン(form)</button>
+      </form>
+      <form>
+        <button @click.stop.prevent="btnClicked2">
+          @仮想ボタン(stop.prevent)
+        </button>
+      </form>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data() {
+          return {};
+        },
+        methods: {
+          //Vuejsで書いた場合
+          btnClicked1() {
+            console.log("仮想ボタン がクリックされました");
+          },
+          btnClicked2() {
+            //v-onを省略した場合
+            console.log("@仮想ボタン がクリックされました");
+          },
+          //イベントオブジェクトを表示する場合
+          btnClickedEvent(e) {
+            console.log(e);
+          },
+          //引数を受け取る場合
+          btnClickedArgs(int) {
+            console.log(int);
+          },
+          //引数とイベントオブジェクトを表示する場合
+          btnClickedArgsEvent(int, e) {
+            console.log(int);
+            console.log(e);
+          },
+        },
+      });
+      //通常のJSで書いた場合
+      function btnClicked() {
+        console.log("リアルボタンがクリックされました");
+      }
+      //イベントオブジェクトを表示する場合
+      const clickEvent = document.getElementById("clickEvent");
+      clickEvent.addEventListener("click", (e) => {
+        console.log(e);
+      });
+
+      //イベントオブジェクトを表示する場合
+      const prevent = document.getElementById("prevent");
+      prevent.addEventListener("click", (e) => {
+        e.preventDefault();
+        //イベントオブジェクトにpreventを使用する事で、読み込まないという設定にできる
+        console.log(e);
+        console.log("送信されました");
+      });
+    </script>
+  </body>
+</html>
