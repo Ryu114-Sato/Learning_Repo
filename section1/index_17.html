@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <title>Document</title>
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- <div id="app" v-cloak > とする事で、{{}}が表示されなくなる-->
+    <div id="app">
+      <!--マシュタッシュ構文が表示されない-->
+      <div v-cloak>{{test1}}</div>
+      <!--マスタッシュ構文が表示されてしまう-->
+      <div>{{test2}}</div>
+    </div>
+    <script>
+      setTimeout(() => {
+        new Vue({
+          el: "#app",
+          data() {
+            return {
+              test1: "v-cloak あり",
+              test2: "v-cloak なし",
+            };
+          },
+        });
+      }, 4000) /*約4秒後、Vuejsが読み込まれて、表示が切り替わる*/;
+    </script>
+  </body>
+</html>
