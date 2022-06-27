@@ -1,1 +1,0 @@
-7.Vuejs DevTools：chromeに拡張機能を追加するのみ

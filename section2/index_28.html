@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="tab/app.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+  </head>
+  <style>
+    .target {
+      transition: opacity 1s;
+      /*  opacity: とは透過度 */
+    }
+    .target.is-hidden {
+      opacity: 0;
+    }
+  </style>
+
+  <body>
+    リアルDOM
+    <br />
+
+    <button id="is-show">JS表示/非表示</button>
+    <div id="target" class="target">JS表示されています</div>
+
+    <br />
+
+    仮想DOM
+    <div id="app">
+      <button @click="isShow = !isShow">Vue表示/非表示</button>
+      <!-- isShowのtrue/falseを入れ替える事ができる書き方 -->
+      <transition name="fade">
+        <div v-show="isShow">Vue表示されています</div>
+      </transition>
+    </div>
+    <script>
+      const isShow = document.getElementById("is-show");
+      const target = document.getElementById("target");
+
+      isShow.addEventListener("click", () => {
+        target.classList.toggle("is-hidden");
+        //classList.toggle() はクラスを付与したり、消したりできる
+      });
+
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            isShow: false,
+          };
+        },
+        methods: {
+          activate(id) {
+            //受け取った引数をactiveに入れて、表示するタブを切り替える
+            this.active = id;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
