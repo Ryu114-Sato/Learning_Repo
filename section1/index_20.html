@@ -19,12 +19,12 @@
       ページを再読み込みしない。
     -->
     <form>
-      <button type="submit">送信</button>
       <!--通信をする時に、ページを再度読み込んでしまう-->
+      <button type="submit">送信</button>
     </form>
     <form>
-      <button id="prevent" type="submit">送信(prevent)</button>
       <!--preventDefaultを使用し、ページを再読み込みしない-->
+      <button id="prevent" type="submit">送信(prevent)</button>
     </form>
 
     仮想DOM
@@ -40,9 +40,11 @@
         仮想ボタン(Args, $e)
       </button>
       <form>
+        <!--通信をする時に、ページを再度読み込んでしまう-->
         <button @click="btnClicked2">@仮想ボタン(form)</button>
       </form>
       <form>
+        <!--preventDefaultを使用し、ページを再読み込みしない-->
         <button @click.stop.prevent="btnClicked2">
           @仮想ボタン(stop.prevent)
         </button>
