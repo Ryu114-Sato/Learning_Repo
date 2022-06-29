@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="app.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <script
+      src="https://kit.fontawesome.com/74a0179551.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    リアルDOM
+
+    <br />
+
+    仮想DOM
+    <div id="app">
+      <button @click="isShow = !isShow">画像を見る</button>
+      <!-- isShowのtrue/falseを入れ替える事ができる書き方 -->
+      <transition name="fade">
+        <div v-show="isShow">
+          <!-- 黒の背景 -->
+          <div class="modal__inner">
+            <!-- バツボタン挙動 -->
+            <div class="modal__close" @click="isShow = !isShow">
+              <!-- バツボタンアイコン -->
+              <i class="fas fa-times"> </i>
+            </div>
+            <img src="image001.jpg" />
+          </div>
+          <div class="modal__background" @click="isShow = !isShow"></div>
+          <!-- 白い背景 -->
+        </div>
+      </transition>
+    </div>
+    <script>
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            isShow: false,
+          };
+        },
+      });
+    </script>
+  </body>
+</html>

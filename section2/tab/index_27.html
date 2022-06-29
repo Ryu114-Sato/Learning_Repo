@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Document</title>
-    <link rel="stylesheet" href="tab/app.css" />
+    <link rel="stylesheet" href="app.css" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
   </head>
   <style>
@@ -30,9 +30,13 @@
             >
           </li>
         </ul>
-        <div class="tab__content" v-show="active === 1">サイトの情報。</div>
-        <div class="tab__content" v-show="active === 2">商品情報。</div>
-        <div class="tab__content" v-show="active === 3">お問い合わせ。</div>
+        <div class="tab__content" v-show="active === 1">
+          サイトの情報。テスト
+        </div>
+        <div class="tab__content" v-show="active === 2">商品情報。テスト</div>
+        <div class="tab__content" v-show="active === 3">
+          お問い合わせ。テスト
+        </div>
       </section>
     </div>
     <script>
@@ -43,8 +47,8 @@
             active: 1,
             items: [
               { id: 1, title: "サイトの情報" },
-              { id: 2, title: "商品情報" },
-              { id: 3, title: "お問い合わせ" },
+              { id: 2, title: "商品情報 " },
+              { id: 3, title: "お問い合わせ " },
             ],
           };
         },
