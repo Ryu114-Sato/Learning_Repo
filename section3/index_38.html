@@ -15,10 +15,21 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+    <style>
+      .error {
+        color: red;
+      }
+    </style>
   </head>
   <body>
     <div id="app">
-      <form>
+      <form @submit.prevent="validate">
+          <p v-if="errors.length">
+              <ul>
+                  <li class="error" v-for="error in errors">  {{error}}                 
+                  </li>
+                  </ul>
+         </p>
         氏名
         <input type="text" v-model="contact.yourName" />
         {{contact.yourName}}
@@ -90,7 +101,33 @@
               attracts: [],
               caution: false,
             },
+            errors: [],
           };
+        },
+        methods: {
+          validate() {
+              this.errors = []//初期化する
+              if(!this.contact.yourName){                  
+                this.errors.push('氏名を入力してください')
+              }else if(this.contact.yourName.length > 20){
+                this.errors.push('氏名は20文字以内で入力して下さい')
+              }
+              if(!this.contact.tel){                  
+                this.errors.push('電話番号を入力してください')
+              }
+
+              if(!this.contact.gender){
+                  //値が入っていなかったらfalseとなる
+                this.errors.push('性別を選択してください')
+              }
+              if(!this.contact.caution){
+                  this.errors.push('注意事項にチェックを入れてください')
+              }
+              if(!this.errors.length){
+                  console.log("送信可能です。")
+              }
+              
+          },
         },
       });
     </script>

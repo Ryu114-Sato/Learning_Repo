@@ -19,10 +19,10 @@
   <body>
     <div id="app">
       一方向バインディング
-      <input :value="test" />
+      <input v-bind:value="test" />
       <br />
       双方向バインディング
-      <input :value="test" @input="test = $event.target.value" />
+      <input :value="test" v-on:input="test = $event.target.value" />
       <!-- イベントオブジェクトの値を参照する方法：$event.target.value -->
       {{test}}
       <br />
