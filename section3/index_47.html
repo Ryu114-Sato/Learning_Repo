@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <p>
+        <button v-on:click.prevent="getDogImage">
+          ワンチャンの写真表示.prevent
+        </button>
+      </p>
+      <br />
+      <img :src="dogImage" />
+      <button @click="getDogImage">@ワンチャンの写真表示</button>
+      <p>
+        文字を入力してワンチャンの写真を表示
+        <input type="text" v-model="watchTest" />
+      </p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script>
+      const url = "https://dog.ceo/api/breeds/image/random";
+      const options = {
+        methods: "get",
+      };
+      let obj = {
+        a: "a",
+      };
+      obj.b = "b";
+      obj.c = test; //JSでオブジェクトに関数を追加する書き方
+
+      function test() {
+        //obj.c()で実行可能
+        console.log("テスト");
+      }
+
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            dogImage: "",
+            watchTest: "",
+          };
+        },
+        methods: {
+          async getDogImage() {
+            //非同期通信のメソッド定義
+            const response = await fetch(url, options) //fetchでsarverからの値を取得し、変数に格納
+              .then((response) => response.json()); //json取得
+            console.log(response);
+            console.log(response.message); //responseにから返ってきた、messageにアクセス
+            this.dogImage = response.message; //dataにresponseデータを格納
+          },
+        },
+        watch: {
+          watchTest() {
+            this.watchDogImage();
+          },
+        },
+        created() {
+          //chromeを読み込んだタイミングで画像を取得
+          this.getDogImage();
+          //vue インスタンスに写真を取得する関数を格納
+          //考え方は、obj.cと同じ
+          this.watchDogImage = _.debounce(this.getDogImage, 2000);
+        },
+      });
+    </script>
+  </body>
+</html>

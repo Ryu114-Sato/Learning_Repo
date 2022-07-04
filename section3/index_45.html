@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <script
+      src="https://kit.fontawesome.com/74a0179551.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <p>
+        <button v-on:click.prevent="getDogImage">
+          ワンチャンの写真表示.prevent
+        </button>
+      </p>
+      <br />
+      <img :src="dogImage" />
+      <button @click="getDogImage">@ワンチャンの写真表示</button>
+    </div>
+
+    <script>
+      const url = "https://dog.ceo/api/breeds/image/random";
+      const options = {
+        methods: "get",
+      };
+
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            dogImage: "",
+          };
+        },
+        methods: {
+          async getDogImage() {
+            //非同期通信のメソッド定義
+            const response = await fetch(url, options) //fetchでsarverからの値を取得し、変数に格納
+              .then((response) => response.json()); //json取得
+            console.log(response);
+            console.log(response.message); //responseにから返ってきた、messageにアクセス
+            this.dogImage = response.message; //dataにresponseデータを格納
+          },
+        },
+        created() {
+          //chromeを読み込んだタイミングで画像を取得
+          this.getDogImage();
+        },
+      });
+    </script>
+  </body>
+</html>

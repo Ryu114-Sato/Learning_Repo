@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="app.css" />
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <!--
+      <link rel="stylesheet" type="text/css" href="app.css" />
     <script
       src="https://kit.fontawesome.com/74a0179551.js"
       crossorigin="anonymous"
@@ -15,24 +15,32 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+      -->
+     
     <style>
+       [v-cloak] {
+        display:none;
+      }
       .error {
         color: red;
       }
     </style>
   </head>
   <body>
-    <div id="app">
-      <form @submit.prevent="validate">
+    <div id="app" v-cloak>
           <p v-if="errors.length">
               <ul>
                   <li class="error" v-for="error in errors">  {{error}}                 
                   </li>
-                  </ul>
+              </ul>
          </p>
+         <form @submit="validate">
         氏名
-        <input type="text" v-model="contact.yourName" />
-        {{contact.yourName}}
+        <input type="text" v-model="yourName" /><!-- computed で監視しているyourNameを参照 -->
+       <br>
+      <p :class="{error: hasError.yourName}"> {{contact.yourName.length}} / 20 </p>
+      <!-- 氏名入力時に即座にバリデイションする -->
+      <p v-show="hasError.yourName" class="error">氏名は20文字以内で入力して下さい</p>
         <br />
         電話番号
         <input type="tel" v-model.number="contact.tel" />
@@ -85,6 +93,7 @@
         <br />
       </form>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
 
     <script>
       let app = new Vue({
@@ -102,6 +111,9 @@
               caution: false,
             },
             errors: [],
+            hasError:{
+              yourName: false
+            }
           };
         },
         methods: {
@@ -128,6 +140,23 @@
               
           },
         },
+        computed:{
+          yourName:{
+            get(){
+             return this.contact.yourName
+            },
+            set(value){  //geterで取得し、setterでvalueとして受け取る          
+                console.log(value);  
+               if(value.length <= 20){       
+                 this.hasError.yourName = false; 
+               }
+               else{
+                this.hasError.yourName = true;    
+               }  
+               return this.contact.yourName = value     
+            }
+          }
+        }
       });
     </script>
   </body>
