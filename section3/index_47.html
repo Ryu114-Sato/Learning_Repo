@@ -22,13 +22,13 @@
       <img :src="dogImage" />
       <button @click="getDogImage">@ワンチャンの写真表示</button>
       <p>
-        文字を入力してワンチャンの写真を表示
+        文字を入力してワンチャンの写真を表示:wachTest
         <input type="text" v-model="watchTest" />
       </p>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script>
-      const url = "https://dog.ceo/api/breeds/image/random";
+      const url = "https://dog.ceo/api/breeds/image/random";//ワンチャンの写真を取得し、url変数に格納
       const options = {
         methods: "get",
       };
@@ -52,26 +52,32 @@
           };
         },
         methods: {
+          //async はpromiseチェーン(.then())をより分かりやすくしたもの
           async getDogImage() {
             //非同期通信のメソッド定義
-            const response = await fetch(url, options) //fetchでsarverからの値を取得し、変数に格納
-              .then((response) => response.json()); //json取得
-            console.log(response);
-            console.log(response.message); //responseにから返ってきた、messageにアクセス
+            const response = await fetch(url, options)//fetchでsarverからの値を取得し、変数に格納
+              .then((response) => response.json());//json取得
+            console.log("response:" + response);
+            console.log("response.message:" + response.message); //responseから返ってきた、messageにアクセス
             this.dogImage = response.message; //dataにresponseデータを格納
           },
         },
         watch: {
           watchTest() {
+            console.log("watch:"+this.watchDogImage());
             this.watchDogImage();
+            console.log("watch:"+this.watchDogImage());
           },
         },
-        created() {
+        created() {//初期動作
+          console.log("created:");
+          console.log("watchDogImageだよ"+this.watchDogImage)
           //chromeを読み込んだタイミングで画像を取得
           this.getDogImage();
           //vue インスタンスに写真を取得する関数を格納
           //考え方は、obj.cと同じ
-          this.watchDogImage = _.debounce(this.getDogImage, 2000);
+          this.watchDogImage = _.debounce(this.getDogImage, 2000);       
+          console.log("watchDogImageだよ"+this.watchDogImage)
         },
       });
     </script>

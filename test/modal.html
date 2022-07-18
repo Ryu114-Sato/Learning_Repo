@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <template id="main">
+        <v-ons-page>
+          <v-ons-toolbar>
+            <div class="center">Modal</div>
+          </v-ons-toolbar>
+
+          <p style="text-align: center">
+            <v-ons-button @click="showModal">Click me</v-ons-button>
+          </p>
+
+          <v-ons-modal :visible="modalVisible" @click="modalVisible = false">
+            <p style="text-align: center">
+              Loading <v-ons-icon icon="fa-spinner" spin></v-ons-icon>
+              <br /><br />
+              Click or wait
+            </p>
+          </v-ons-modal>
+        </v-ons-page>
+      </template>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <script>
+      let app = new Vue({
+        el: "#app",
+        template: "#main",
+        data() {
+          return {
+            modalVisible: false,
+            timeoutID: 0,
+          };
+        },
+        methods: {
+          showModal() {
+            this.modalVisible = true;
+            clearTimeout(this.timeoutID);
+            this.timeoutID = setTimeout(
+              () => (this.modalVisible = false),
+              2000
+            );
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

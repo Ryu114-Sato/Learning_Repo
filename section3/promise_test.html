@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <p>
+        <button v-on:click.prevent="getLog">getLog</button>
+        <br />
+        {{log}}
+      </p>
+      <p>
+        <button v-on:click.prevent="testPromise">promise</button>
+      </p>
+      <p>
+        <button v-on:click.prevent="asyncTest">async</button>
+      </p>
+      <p>
+        <button v-on:click.prevent="awaitTest">await</button>
+      </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+
+    <script>
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            log: "",
+          };
+        },
+        methods: {
+          getLog() {
+            setTimeout(() => {
+              console.log("2.5秒後に表示");
+              this.log = "2.5秒後に表示";
+            }, 2500);
+          },
+          testPromise() {
+            let promise = new Promise(function (resolve, reject) {
+              //解決済みの場合、resoleveに結果を格納
+              setTimeout(() => resolve("done!"), 1000);
+              //拒否された場合、Errorインスタンスを生成して、結果をrejectに
+              setTimeout(() => reject(new Error("Whoops!")), 1000);
+            });
+            promise.then(
+              (result) => alert(result), //← 1秒後に "done!" を表示
+              (error) => alert(error), //← Whoops,
+              alert("promiseの処理を待てない！")
+            );
+          },
+          asyncTest() {
+            //promise でラップしてくれる
+            async function af() {
+              return "done!";
+            }
+            af().then(alert);
+            alert("promiseの処理を待てない！")
+          },
+          awaitTest() {
+            async function f() {
+              let promise = new Promise((resolve, reject) => {
+                setTimeout(() => resolve("done!"), 1000);
+              });
+              let result = await promise; // promise が解決するまで待つ
+              alert(result); // "done!"
+              alert("promiseの処理を待てる！")
+            }
+
+            f();
+          },
+        },
+      });
+    </script>
+
+    <!-- 
+        function loadScript(src) {
+          スクリプトを読み込む処理
+          callback(); ←JavaScript は処理を待てないのでcallback関数を使う
+           }
+           loadScript("/myScript.js",newFunction);
+          ( newFunction(); ← この関数はmyScript.jsを読み込みが終わるのを待ちません)
+           
+          こうすることでスクリプトを読み込んだ後に、そのスクリプトの処理を使用する関数を呼ぶことができます。
+　　　　　　しかし、ある非同期処理が終わった後にある非同期処理をやる、 
+　　　　　　、、、ネスト地獄が待っています。↓
+
+        loadScript("script1.js", function() {
+         loadScript("script2.js", function() {
+           loadScript("script3.js", function() {
+
+              ..... }
+           }
+        }
+        これを解決するのがPromise となる
+        
+        -->
+  </body>
+</html>

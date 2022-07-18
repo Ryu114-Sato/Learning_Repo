@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+  <!--  ⌘ = command
+  ⌥ = option
+  ⇧ = shift
+  ⌃ = control -->
+  <body>
+    <div id="app">
+      //indexTest
+      <ul>
+        <li v-for="(item , index) in contents" ::key="index">
+
+          <p v-for="(title,titleIndex) in item.title">
+            <span :key="'title'+ titleIndex "> {{title}}</span>
+           <!--  <br
+              v-if="titleIndex !== item.content.length -1"
+              ::key="'titleBr'+ titleIndex"
+            /> -->
+          </p>
+          
+          <p v-for="(content,contentIndex) in item.content">
+            <span :key="'content'+ contentIndex ">{{content}}</span>
+            <!-- <br
+              v-if="contentIndex !== item.content.length -1"
+              ::key="'titleBr'+ contentIndex"
+            /> -->
+          </p>
+        </li>
+      </ul>
+
+    <script>
+      let app = new Vue({
+        //vueインスタンス生成
+        el: "#app",
+        data() {
+          return {
+            contents: [
+              {
+                title: ["aaa"],
+                content: ["a-content"],
+              },
+              {
+                title: ["bbb"],
+                content: ["b-content"],
+              },
+              {
+                title: ["ccc"],
+                content: ["c-content"],
+              },
+              {
+                title: ["ddd"],
+                content: ["d-content"],
+              },
+              {
+                title: ["eee"],
+                content: ["e-content"],
+              },
+              {
+                title: ["aaa"],
+                content: ["a-content"],
+              },
+              {
+                title: ["bbb"],
+                content: ["b-content"],
+              },
+              {
+                title: ["ccc"],
+                content: ["c-content"],
+              },
+              {
+                title: ["ddd"],
+                content: ["d-content"],
+              },
+              {
+                title: ["eee"],
+                content: ["e-content"],
+              },
+            ],
+          };
+        },
+      });
+    </script>
+  </body>
+</html>

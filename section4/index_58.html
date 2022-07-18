@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .parent {
+      width: 800px;
+      margin: 0 auto;
+      border: 1px red solid;
+    }
+    .child {
+      width: 30%;
+      margin: 0 auto;
+      border: 1px blue solid;
+    }
+  </style>
+  <body>
+    <!-- 親側 仮想DOM-->
+    <div id="app" class="parent">
+      <!-- 子側  component スネークケース-->
+      <custom-input class="child" @child-event="parentValue = $event">
+      </custom-input>
+      <!-- 子側  -->
+
+      {{ parentValue}}
+      <!-- 親側 仮想DOM-->
+
+      <v-ons-modal
+        :visible="isVisible"
+        :options="{animation: 'fade'}"
+        style="height: 100vh"
+      >
+        表示</v-ons-modal
+      >
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <script>
+      /* 子側 componentはキャメルケース */
+      let customInput = {
+        template: `<div>
+          <input type="text" v-model="childParam">
+          </div>`,
+        data() {
+          return {
+            childValue: "",
+            isVisible: true,
+          };
+        },
+        computed: {
+          childParam: {
+            get() {
+              return this.childValue;
+            }, //表示
+            set(value) {
+              //入ってきた値をdataに設定設定
+              this.childValue = value;
+              //childParamに入力値が入ってきたらイベントchild-eventが発火し、valueを子から親に渡す
+              this.$emit("child-event", value); //Event Up
+            },
+          },
+        },
+      };
+
+      /* 親側 */
+      let app = new Vue({
+        el: "#app",
+        components: {
+          customInput, //親から子を読み込む為の宣言
+        },
+        data() {
+          return {
+            parentValue: "", //child-eventから渡される
+          };
+        },
+      });
+    </script>
+  </body>
+</html>
