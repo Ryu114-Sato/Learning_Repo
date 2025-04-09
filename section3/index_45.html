@@ -18,13 +18,19 @@
   <body>
     <div id="app">
       <p>
-        <button v-on:click.prevent="getDogImage">
+        <button v-on:click.prevent="getDogImage1">
           ワンチャンの写真表示.prevent
         </button>
       </p>
       <br />
+      DogApiで取得した画像をv-bind: でリアクティブに表示する
       <img :src="dogImage" />
-      <button @click="getDogImage">@ワンチャンの写真表示</button>
+      非同期通信のメソッド
+      <button @click="getDogImage1">@getDogImage1</button>
+      <br />
+      awaitなし（処理を待たない？）
+      <button @click="getDogImage2">@getDogImage2</button>
+      <button @click="getItem">@getItem</button>
     </div>
 
     <script>
@@ -41,18 +47,41 @@
           };
         },
         methods: {
-          async getDogImage() {
+          async getDogImage1() {
             //非同期通信のメソッド定義
             const response = await fetch(url, options) //fetchでsarverからの値を取得し、変数に格納
-              .then((response) => response.json()); //json取得
+              .then((response) => response.json()); //responseの中身をjson化
             console.log(response);
             console.log(response.message); //responseにから返ってきた、messageにアクセス
             this.dogImage = response.message; //dataにresponseデータを格納
+            alert("写真を表示！");
+          },
+          getDogImage2() {
+            //awaitなし
+            const response = fetch(url, options).then((response) =>
+              response.json()
+            );
+            this.dogImage = response.message;
+            alert("写真を表示！");
+          },
+
+          async getItem() {
+            function makeList() {
+              const test = { id: [1, 2, 3, 4, 5], title: "one" };
+            }
+            const nofications = await fetch(makeList());
+            const list = nofications || ["2", "3"];
+            console.log(list);
+            console.log(list[1]);
+            this.checkid(list.map((item) => item.id));
+          },
+          checkid(id) {
+            console.log("itemだよ　" + id[0]);
           },
         },
         created() {
-          //chromeを読み込んだタイミングで画像を取得
-          this.getDogImage();
+          //domを読み込んだタイミングで画像を取得:初期処理
+          this.getDogImage1();
         },
       });
     </script>

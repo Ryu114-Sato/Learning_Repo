@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <input type="text" v-model="keyword" />
+      <button @click="search(keyword)">検索する</button>
+      <br />
+      検索文字列：{{keyword}}
+      <br />
+      searchResults：{{searchResults}}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <script>
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            keyword: "",
+            searchResults: [],
+          };
+        },
+        methods: {
+          async search(keyword) {
+            this.searchResults = [];
+            const baseUrl = "https://www.googleapis.com/books/v1/volumes?"; //このAPIの後にパラメータを足して検索
+            //クエリーストリングを作成
+            const params = {
+              q: `intitle:${keyword}`, //検索文字列
+              maxResults: 40, //最大40件検索数
+            };
+            //fetch で取得する際に必要
+            const queryParams = new URLSearchParams(params);
+            console.log(baseUrl + queryParams);
+
+            //fetch でjsonを取得
+            const response = await fetch(baseUrl + queryParams).then(
+              (response) => response.json()
+            );
+            console.log(response.items);
+            //for 文でitemsの中身を取得
+            for (let book of response.items) {
+              let title = book.volumeInfo.title;
+              let subtitle = book.volumeInfo.subtitle;
+              let img = book.volumeInfo.imageLinks;
+              let description = book.volumeInfo.description;
+              this.searchResults.push({
+                //必要な情報を配列にpush
+                title: title ? title : "", //(三項) 演算子
+                subtitle: subtitle ? subtitle : "",
+                image: img ? img.thumbnail : "",
+                description: description ? description.slice(0, 40) : "",
+              });
+            }
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

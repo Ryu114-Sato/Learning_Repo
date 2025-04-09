@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="app.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="app.css" /> -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
     <script
       src="https://kit.fontawesome.com/74a0179551.js"
@@ -19,24 +19,23 @@
   <body>
     <div id="app">
       <form>
-        氏名
+        氏名: {{contact.yourName}}
         <input type="text" v-model="contact.yourName" />
-        {{contact.yourName}}
         <br />
-        電話番号
+        電話番号:{{contact.tel}}
         <input type="tel" v-model.number="contact.tel" />
-        {{contact.tel}}
         <br />
-        メールアドレス
+        メールアドレス:{{contact.email}}
         <input type="email" v-model.lazy.trim="contact.email" />
-        {{contact.email}}
         <br />
-        性別
+        性別: {{contact.gender}}
         <input type="radio" value="male" v-model="contact.gender" />男性
         <input type="radio" value="female" v-model="contact.gender" />女性
         <input type="radio" value="other" v-model="contact.gender" />その他
+
         <br />
-        年齢
+        年齢:{{contact.age}}
+
         <select v-model="contact.age">
           <option disabled value="">年齢を入力してください</option>
           <option>10代</option>
@@ -44,10 +43,11 @@
           <option>30代</option>
           <option>40代〜</option>
         </select>
+
         <br />
-        メッセージ
+        メッセージ:{{contact.message}}
         <textarea v-model="contact.message"></textarea>
-        {{contact.message}}
+
         <br />
         このサイトを知った理由
         <input
@@ -66,6 +66,9 @@
           v-model="contact.attracts"
         />その他
         <br />
+        チェック結果:<br />
+        {{contact.attracts[0]}}
+        <br />{{contact.attracts[1]}} <br />{{contact.attracts[2]}}
         注意事項に同意する
         <input type="checkbox" v-model="contact.caution" />
         <br />

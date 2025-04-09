@@ -1,19 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Forms</title>
-</head>
-<br>
-    <input>
-<input id=" " class="" type="text" name="your_name" value="aaa">氏名</input></br>
-<input type="email" required placeholder="メールアドレスを入力">メールアドレス</br>
-<label for="gender_male">男性</label>
-<input id="gender_male" type="radio" name="gender">
-<input type="radio" name="gender">女性
-    </form>
-
-</body>
+  </head>
+  <style>
+    .h400 {
+      height: 400px;
+      border: 1px solid red;
+    }
+  </style>
+  <body>
+    <div>
+      <h1 id="toForm">ここにWebEFの基本的な情報が載っているよ</h1>
+      <form>
+        formタグはサーバーにユーザー情報を送信するよ。
+        <br />
+        自動でバリデーションチェックとかしてくれる機能(requiredとか)もあるよ<br />
+        <input id=" " class="" type="text" name="your_name" value="aaa" />氏名
+        <br />
+        <input
+          type="email"
+          required
+          placeholder="メールアドレスを入力"
+        />メールアドレス<br />
+        <label for="gender_male">男性</label>
+        <input id="gender_male" type="radio" name="gender" />
+        <input type="radio" name="gender" />女性
+        <br />
+        <select>
+          選択
+        </select>
+        <textarea
+          class="h400"
+          placeholder="ここはテキスト入力エリアだよ。まだ下にWebEFの情報が載っているからスクロールしてね。"
+        ></textarea>
+        <input type="submit" /><br />
+      </form>
+      <ol>
+        <li>
+          <a href="https://developer.mozilla.org/ja/docs/Web"
+            >ここにWebEFの基本的な情報が載っているよ</a
+          >
+        </li>
+        <li>
+          <a href="#toForm">同じページ内の特定の位置に飛ぶリンクだよ</a>
+        </li>
+        <li>
+          <a href="https://www.example.com" target="_blank"
+            >新しいタブで開くよ</a
+          >
+        </li>
+      </ol>
+    </div>
+  </body>
 </html>
+
+<script></script>

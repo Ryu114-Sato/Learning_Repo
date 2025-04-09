@@ -15,9 +15,12 @@
 
     仮想DOM
     <div id="app">
-      {{methoPrice()}} & {{methoPrice()}}
+      {{methoPrice()}} 
       <br /><!--computedはキャッシュされるので、consoleは１度のみ表示-->
-      {{compuPrice}} & {{compuPrice}}
+      {{compuPrice}} 
+      <br />
+      {{allowCompuPrice}}
+
     </div>
     <script>
       let app = new Vue({
@@ -29,17 +32,16 @@
           };
         },
         methods: {
-          methoPrice() {
-            console.log("methodsです。");
+          methoPrice() {           
             return this.price * this.number;
           },
         },
         computed: {
-          /*  compuPrice() {
-            console.log("computedです。");
+           compuPrice() {          
             return this.price * this.number;
-          }, 省略した書き方を以下に記載*/
-          compuPrice: (app) => app.number * app.price,
+          }, 
+          //アロー関数で省略した書き方を以下に記載,
+          allowCompuPrice: (app) => app.number * app.price,
         },
       });
 

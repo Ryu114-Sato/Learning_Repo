@@ -18,6 +18,8 @@
       {{methoPrice()}} & {{methoPrice()}}
       <br />
       {{compuPrice}} & {{compuPrice}}
+      <br />
+      <button @click="compuPrice2">+1</button>
     </div>
     <script>
       let app = new Vue({
@@ -50,25 +52,35 @@
           };
         },
         methods: {
+          //一般的な関数と同じ
           methoPrice() {
-            console.log("methodsです。");
+            console.log("methodsが実行されました。");
             return this.price * this.number;
           },
         },
         computed: {
+          /*
+          ・return に特定したdataを含めて返す。
+          ・算出プロパティと呼ばれる
+          ・data()内の値はキャッシュされるため、更新された時のみ処理を実行する（処理の回数を節約できる） */
           compuPrice() {
             console.log("computedです。");
             return this.price * this.number;
           },
-          /*  省略した書き方を以下に記載
-         compuPrice: (app) => app.number * app.price,*/
+          /*  省略した書き方を以下に記載　*/
+          compuPrice2: (app) => app.number * 150,
         },
         watch: {
+          /* booksのオブジェクトを監視。オブジェクトに変更が加えられると、
+             handler（）メソッドが検知し処理が実行される */
           books: {
             handler() {
-              /* booksのオブジェクトを監視。オブジェクトに変更が加えられると、
-              ハンドラーメソッド検知し処理が実行される */
-              console.log("変更されました");
+              console.log("booksオブジェクトに変更が加えられました");
+            },
+            number: {
+              handler() {
+                console.log("numberの値が変更されました。");
+              },
             },
             deep: true,
           },

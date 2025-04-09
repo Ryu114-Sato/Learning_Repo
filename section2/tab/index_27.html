@@ -9,8 +9,8 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
   </head>
   <style>
-    .h1000 {
-      height: 1000px;
+    .h500 {
+      height: 500px;
       border: 1px solid red;
     }
   </style>
@@ -18,17 +18,31 @@
   <body>
     <br />
     <div id="app">
-      <div class="h1000"></div>
+      <div class="h500">
+        <h2>
+          クリックイベントでページを再読み込みしてしまう。これを防ぐには
+          @click.prevent を使う
+        </h2>
+        <ol>
+          <li>v-for はkey指定する</li>
+          <li>クラスをつけたり消したり:class="{active: active === item.id}"</li>
+          <li>
+            v-for , sass を利用して、サイトを作る（タブ切り替え）
+            サイトの中身の情報はv-showで表示切り替えする
+          </li>
+        </ol>
+      </div>
       <section class="tab">
         <ul class="tab__label">
           <li v-for="(item, id) in items" :key="item.id">
             <!-- .prevent を消して、クリックイベントのみだと、再読み込みしてしまう -->
             <a
               href="#"
-              @click.prevent="activate(item.id)"
+              @click="activate(item.id)"
               :class="{active: active === item.id}"
-              >{{item.title}}</a
             >
+              {{item.title}}
+            </a>
           </li>
         </ul>
         <div class="tab__content" v-show="active === 1">

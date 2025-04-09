@@ -1,0 +1,23 @@
+.red-a {
+  border: red 1px solid;
+}
+
+.blue-b {
+  border: blue 2px solid;
+}
+
+.green-c {
+  border: green 3px solid;
+}
+
+.yellow-d {
+  border: yellow 1px solid;
+}
+
+.blanchedalmond {
+  border: blanchedalmond 2px solid;
+}
+
+[v-cloak] {
+  display: none;
+}

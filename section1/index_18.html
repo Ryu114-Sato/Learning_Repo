@@ -36,8 +36,19 @@
         },
       });
       //通常のJSで書いた場合
+      function makeList() {
+        const test = { id: [1, 2, 3, 4, 5], title: "one" };
+      }
       function btnClicked() {
         console.log("リアルボタンがクリックされました");
+        const nofications = makeList();
+        const list = nofications || ["2", "3"];
+        console.log(list);
+        console.log(list[1]);
+        checkid(list.map((item) => item.id));
+      }
+      function checkid(id) {
+        console.log("itemだよ　" + id[0]);
       }
     </script>
   </body>

@@ -6,8 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
+  <style>
+      .error {
+        color: red;
+      }
+    </style>
   <body>
     <div id="app">
+      <form @click.prevent="validate">
       <p>
         <button v-on:click.prevent="getLog">getLog</button>
         <br />
@@ -22,23 +28,155 @@
       <p>
         <button v-on:click.prevent="awaitTest">await</button>
       </p>
+　　　　　<p v-if="errors.length">
+          <ul>
+              <li class="error" v-for="error in errors">  {{error}}                 
+              </li>
+          </ul>
+         </p>
+      firstNumber
+      <input type="text" v-model="custNumber.firstNumber" />
+      {{custNumber.firstNumber}} - secondtNumber
+      <input type="text" v-model="custNumber.secondtNumber" />
+      {{custNumber.secondtNumber}} - thirdNumber
+      <input type="text" v-model="custNumber.thirdNumber" />
+      {{custNumber.thirdNumber}}
+      <br />
+      <p>
+        <button v-on:click.prevent="getOpenId(custNumber)">
+          会員番号を入力してください1
+        </button>
+        <br />
+      </p>
+       <p>
+        <button v-on:click.prevent="loadash">Loadash</button>
+        <br />
+        {{user_id}}
+      </p>
+      <p>
+        比較対象の文字列を入力してください。
+      <input type="text" v-model="comparison.left" />
+        <br />
+        <input type="text" v-model="comparison.right" />
+        <br />
+      <button color="primary" @click="greater(comparison.left,comparison.right)">
+大なり(>)</button>
+{{comparison.greater}}
+<br />
+<button color="primary" @click="
+lesser(comparison.left,comparison.right)">
+小なり(<)</button>{{comparison.lesser}}
+      </form>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
 
     <script>
+      
       let app = new Vue({
         el: "#app",
         data() {
           return {
             log: "",
+            test: true,
+            question: "",
+            comparison:{
+right:null,
+left:null,
+greater:'',
+lesser:''
+            },
+            custNumber: {
+              firstNumber: "",
+              secondtNumber: "",
+              thirdNumber: "",
+            },
+            user_id:null,
+             errors: [],
           };
         },
         methods: {
+          greater(left,right){
+            // const left = left ;
+            // const right = right;
+            const response = left > right;
+            console.log('left:'+left+' right:'+right+' response'+response)
+            
+            if(response){
+              this.comparison.greater ='左辺より右辺が大きい'
+            }
+            else if(!response){
+              this.comparison.greater ='右辺より左辺が大きい'
+            }
+          },
+          lesser(left,right){
+            // const left = left ;
+            // const right = right;
+            const response = left < right;
+            this.lesser = response
+          },
+      loadash(){
+    /* 
+    let books = [
+    //   //連想配列（オブジェクト）
+    //   //追加した本
+    //   { id: 1, name: "ワンピース 100" },
+    //   { id: 2, name: "ワンピース 101" },
+    //   { id: 3, name: "ワンピース 102" },
+    //   { id: 4, name: "ワンピース 103" },
+    //   { id: 5, name: "ワンピース 104" },
+    // ];
+    // const notFind = _.find(books, { id: 10 });
+    // console.log("notFind:" + notFind);
+
+    // const newFilter = books.filter((book) => {
+    //   console.log("book == notFind:" + book == notFind);
+    //   return book == notFind;
+    // });
+
+    // if (newFilter.length === 0) {
+    //   //※配列を判定する場合、.length を使用する
+    //   console.log("新規で追加しました:" + newFilter);
+    //   console.log("新規で追加しました:" + JSON.stringify(newFilter));
+    // } else if (newFilter) {
+    //   console.log("既に追加されています:" + JSON.stringify(newFilter));
+    // }*/
+ },
+          getOpenId(val) {
+            let params = val || {};
+            params = {
+              one: val.firstNumber || null,
+              two: val.secondtNumber || null,
+              three: val.thirdNumber || null,
+            };
+
+            try {
+              this.question = val == "null" ? null : val;
+              //ああああ;
+              if (this.question == null) {
+                throw { error };
+              }
+            } catch (e) {
+              console.log("throwの結果：" + e);
+            }
+            console.log("params：" + params);
+            console.log("params.custNumber : " + params.one);
+           console.log(this.question = val == "null" ? null : val)
+          }, validate() {
+              this.errors = []//初期化する
+              if(!this.custNumber.firstNumber){                  
+                this.errors.push('第１番号を入力して下さい')
+              }else if(this.custNumber.secondtNumber.length > 4 ){
+                this.errors.push('第２番号を3文字以内で入力して下さい')
+              }
+              if(this.custNumber.thirdNumber < 3){                  
+                this.errors.push('第３番号を３文字以上で入力して下さい')
+              }
+          },
           getLog() {
             setTimeout(() => {
+              console.log(this.test ? "Face ID" : "Touch ID");
               console.log("2.5秒後に表示");
-              this.log = "2.5秒後に表示";
+              this.log = this.test ? "Face ID" : "Touch ID";
             }, 2500);
           },
           testPromise() {
@@ -47,11 +185,10 @@
               setTimeout(() => resolve("done!"), 1000);
               //拒否された場合、Errorインスタンスを生成して、結果をrejectに
               setTimeout(() => reject(new Error("Whoops!")), 1000);
-            });
-            promise.then(
+            }).then(
               (result) => alert(result), //← 1秒後に "done!" を表示
               (error) => alert(error), //← Whoops,
-              alert("promiseの処理を待てない！")
+              alert("機能：resolve, reject,などを返す")
             );
           },
           asyncTest() {
@@ -60,20 +197,20 @@
               return "done!";
             }
             af().then(alert);
-            alert("promiseの処理を待てない！")
+            alert("機能：promise でラップしてくれる!");
           },
           awaitTest() {
             async function f() {
               let promise = new Promise((resolve, reject) => {
                 setTimeout(() => resolve("done!"), 1000);
               });
-              let result = await promise; // promise が解決するまで待つ
+              let result = await promise;
               alert(result); // "done!"
-              alert("promiseの処理を待てる！")
+              alert("機能：promiseの処理を待てる！");
             }
-
             f();
           },
+        
         },
       });
     </script>

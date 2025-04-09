@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>$emit テスト</title>
+    <style>
+      .parent {
+        width: 800px;
+        margin: 0 auto;
+        border: 1px red solid;
+      }
+      .child {
+        width: 30%;
+        margin: 0 auto;
+        border: 1px blue solid;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="parent">
+      <emit-test @custom-event="parentMethod" class="child"
+        >emitのテストだよ</emit-test
+      >{{parentData}}
+      <custom-input
+        :value="parentValue"
+        @input="parentValue=$event"
+        class="child"
+      ></custom-input>
+      {{parentValue}}
+      <child-component class="child"
+        >Slotを差し込んで親の文字を表示したよ</child-component
+      >
+      <my-com class="child">
+        <template v-slot:header>ヘッダー</template>
+        mainはnameを使用していないと、
+        <template #footer> フッター </template>
+        差し込んでいる位置に表示されるよ
+      </my-com>
+      <pro-file class="child">
+        <template v-slot="player">
+          {{player}} {{player.member.birthDay}}
+        </template>
+      </pro-file>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+  <script>
+    /*子側のコンポーネントだよ*/
+    let emitTest = {
+      template: `
+          <div>
+            <button @click="childMethod">子メソッド</button>
+          </div>`,
+      methods: {
+        childMethod() {
+          //emit で親に値を渡してみよう
+          let childVal = "子⇨親で値を$emitで渡したよ";
+          this.$emit("custom-event", childVal);
+        },
+      },
+    };
+    let customInput = {
+      /* 親側のinputで入力されt値を子側に渡したあと、親側に反映する */
+      props: {
+        value: {
+          type: String,
+        },
+      },
+
+      template: `<div>v-on,-bindで実行しているよ。
+                <input :value="value" @input="childEvent" >
+                v-modelならもっと簡単にできるよ。
+                </div>`,
+      methods: {
+        childEvent(e) {
+          this.$emit("input", e.target.value);
+        },
+      },
+    };
+    /* slotでcomponentに値を差し込んでみる */
+    //section4 :63　単純な差込
+    let childComponent = {
+      template: `<div>
+        久保 <slot> 南野 </slot> 道安
+      </div>
+        `,
+    };
+    // section:64 複雑な差込　v-bindは「#」で表現することも可能
+    let myCom = {
+      template: `
+      <div>
+        <slot name="header">header</slot>
+        <slot>main contents</slot>
+        <slot name = "footer">footer</slot>
+      </div>
+        `,
+    };
+    //section:65 slot scoop
+    let proFile = {
+      template: `
+      <div>
+        <slot :member="member"> ここが差し代わる </slot>
+      </div>`,
+      data() {
+        return {
+          member: {
+            name: "佐藤　龍一",
+            height: 178,
+            birthDay: 19930114,
+          },
+        };
+      },
+    };
+    let app = new Vue({
+      //親側のインスタンスだよ
+      el: "#app",
+      components: {
+        emitTest,
+        customInput,
+        childComponent,
+        myCom,
+        proFile,
+      },
+      data() {
+        return {
+          parentData: "",
+          parentValue: "",
+        };
+      },
+      methods: {
+        parentMethod(e) {
+          console.log("親側のメソッドで値を受け取ったよ：" + e);
+          this.parentData = e;
+        },
+      },
+    });
+  </script>
+</html>

@@ -11,6 +11,9 @@
       <my-component></my-component>
       <my-component></my-component>
       <my-component></my-component>
+      <button v-on:click="display">仮想ボタン</button>
+      <br />
+      あなたのお名前：{{yourName}}
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
     <script>
@@ -18,6 +21,8 @@
         template: `<div>
           あああ
           <div v-show="isShow">表示</div>
+                <button @click="isShow = !isShow;">マイコンポボタン</button>
+                <input type="text" v-model="yourName" />
           </div>`,
         data() {
           return {
@@ -33,7 +38,14 @@
           //  "my-component": myComponent,
         },
         data() {
-          return {};
+          return {
+            yourName: "",
+          };
+        },
+        methods: {
+          display() {
+            this.isShow = !this.isShow;
+          },
         },
       });
     </script>

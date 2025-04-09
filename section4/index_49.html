@@ -16,14 +16,21 @@
     <script>
       Vue.component("my-component", {
         template: `<div>
-      あああ<br>
-      いいい
+      コンポ毎に<br>
+      インスタンスデータを持つよ
       <div v-show="isShow">表示</div>
+      <button @click="display">display</button>
+      <button @click="isShow = !isShow;">"isShow = !isShow"</button>
       </div>`,
         data() {
           return {
             isShow: false,
           };
+        },
+        methods: {
+          display() {
+            this.isShow = !this.isShow;
+          },
         },
       });
       let app = new Vue({

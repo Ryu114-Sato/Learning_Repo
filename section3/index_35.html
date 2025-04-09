@@ -18,15 +18,25 @@
   </head>
   <body>
     <div id="app">
-      一方向バインディング
+      一方向バインディング(v-bindのみ)
       <input v-bind:value="test" />
       <br />
-      双方向バインディング
+      双方向バインディング（v-bind & v-on）
       <input :value="test" v-on:input="test = $event.target.value" />
       <!-- イベントオブジェクトの値を参照する方法：$event.target.value -->
       {{test}}
       <br />
+      (v-on のみ)
       <input @input="checkEvent" />
+      <br />
+      {{itemEvent}}
+      <ul>
+        ※補足
+        <li>v-bind: インスタンスのdataをクライアント側に表示</li>
+        <li>v-on: イベントによりユーザーの情報をインスタンスに連携する</li>
+        <li>この2つを実現する事により、双方向バインディングを実現する。</li>
+        <li>v-modelはこの機能を２つ備えている</li>
+      </ul>
     </div>
 
     <script>
@@ -35,12 +45,14 @@
         data() {
           return {
             test: "あああ",
+            itemEvent: "",
           };
         },
         methods: {
           checkEvent(e) {
             //引数にeと書くとイベントオブジェクトを取得できる
             console.log(e);
+            this.itemEvent = e;
           },
         },
       });

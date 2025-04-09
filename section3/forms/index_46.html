@@ -14,9 +14,22 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+      .error {
+        color: red;
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app" v-cloak>
+      <button @click.prevent="resizeFc('resizeした')">resizeする</button>
+      {{resize}}
+      <p>{{resizeCr}}</p>
+      <p>{{resizeMt}}</p>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 
@@ -40,7 +53,25 @@
       let app = new Vue({
         el: "#app",
         data() {
-          return {};
+          return {
+            resize: "",
+            resizeCr: "",
+            resizeMt: "",
+          };
+        },
+        methods: {
+          resizeFc(e) {
+            window.addEventListener("resize", (e) => {
+              console.log("リサイズしたよ");
+            });
+            this.resize = e;
+          },
+        },
+        created() {
+          this.resizeCr = "createdだよ";
+        },
+        mounted() {
+          this.resizeMt = "mountedだよ";
         },
       });
     </script>

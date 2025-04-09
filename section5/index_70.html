@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vuetify2.3.10 テスト</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@5.5.55/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@2.3.10/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <v-app>
+        <v-app-bar app> header </v-app-bar>
+        <v-main>
+          <v-container fluid
+            ><span class="text-h4">Vボタンのテストだよ</span>
+            <p class="my-5">
+              <v-btn elevation="2" small>Vボタンのスモールだよ</v-btn>
+            </p>
+
+            <p>
+              <v-btn disabled block elevation="3">Vボタンのblockだよ </v-btn>
+            </p>
+            <v-btn elevation="4" fab icon outlined>icon</v-btn>
+            <v-card elevation="5" class="d-flex justify-center my-5"
+              >Vカードだよ</v-card
+            >
+            <v-btn color="primary" class="my-3" @click="isShow = !isShow"
+              >カードの表示・非表示</v-btn
+            >
+
+            <v-card v-show="isShow" class="mx-auto" max-width="344" outlined>
+              <v-list-item three-line>
+                <v-list-item-content>
+                  <div class="text-overline mb-4">OVERLINE</div>
+                  <v-list-item-title class="text-h5 mb-1">
+                    Headline 5
+                  </v-list-item-title>
+                  <v-list-item-subtitle
+                    >Greyhound divisely hello coldly
+                    fonwderfully</v-list-item-subtitle
+                  >
+                </v-list-item-content>
+
+                <v-list-item-avatar
+                  tile
+                  size="80"
+                  color="grey"
+                ></v-list-item-avatar>
+              </v-list-item>
+
+              <v-card-actions>
+                <v-btn outlined rounded text> Button </v-btn>
+              </v-card-actions>
+            </v-card>
+
+            <div class="text-center">
+              <v-menu offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                    メニュー
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-item v-for="(item, index) in items" :key="index">
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </div>
+          </v-container>
+        </v-main>
+        <v-footer> footer </v-footer>
+      </v-app>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.3.10/dist/vuetify.js"></script>
+  <script>
+    new Vue({
+      el: "#app",
+      vuetify: new Vuetify(),
+      data() {
+        return {
+          isShow: true,
+          items: [
+            { title: "Click Me" },
+            { title: "Click Me" },
+            { title: "Click Me" },
+            { title: "Click Me 2" },
+          ],
+        };
+      },
+    });
+  </script>
+</html>

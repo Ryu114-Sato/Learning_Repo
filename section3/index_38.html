@@ -23,13 +23,14 @@
   </head>
   <body>
     <div id="app">
-      <form @submit.prevent="validate">
-          <p v-if="errors.length">
+        <p v-if="errors.length">
               <ul>
-                  <li class="error" v-for="error in errors">  {{error}}                 
+                  <li class="error" v-for="error in errors" >  
+                    {{error}}                 
                   </li>
-                  </ul>
-         </p>
+              </ul>
+        </p>
+      <form @submit.prevent="validate">
         氏名
         <input type="text" v-model="contact.yourName" />
         {{contact.yourName}}

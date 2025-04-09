@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{title}}</h1>
+      <button @click="count++">Count is: {{ count }}</button>
+      <ol>
+        <li>高速化</li>
+        <li>ファイルサイズ減</li>
+        <li>Provide/inject ・・長距離のprops</li>
+        <li>大規模・・CompositionAPI</li>
+        <li>TypeScriptサポート改善</li>
+        <li>IE11未対応</li>
+      </ol>
+      <a href="https://ja.vuejs.org/guide/introduction.html">Vue3ガイド</a>
+      <ul>
+        <li><a href="http://127.0.0.1:5500/">top</a></li>
+        <li><a href="http://127.0.0.1:5500/section10/cdn.html">cdn</a></li>
+      </ul>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+      const Counter = {
+        data() {
+          return {
+            count: 0,
+            title: "Vue3の特徴",
+          };
+        },
+      };
+
+      Vue.createApp(Counter).mount("#app");
+    </script>
+  </body>
+</html>

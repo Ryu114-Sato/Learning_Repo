@@ -17,9 +17,9 @@
     />
       -->
 
-     
+    
     <style>
-       [v-cloak] {
+      [v-cloak] {
         display:none;
       }
       .error {
@@ -34,14 +34,19 @@
                   <li class="error" v-for="error in errors">  {{error}}                 
                   </li>
               </ul>
-         </p>
-         <form @submit="validate">
+          </p>
+      <form @submit.prevent="validate">
         氏名
         <input type="text" v-model="yourName" /><!-- computed で監視しているyourNameを参照 -->
-       <br>
+      <br>
       <p :class="{error: hasError.yourName}"> {{contact.yourName.length}} / 20 </p>
       <!-- 氏名入力時に即座にバリデイションする -->
       <p v-show="hasError.yourName" class="error">氏名は20文字以内で入力して下さい</p>
+      郵便番号,住所
+      <!-- <input type="text" v-model.number="contact.adress" /> -->
+      <textarea v-model="contact.adress"></textarea>
+        <br />
+        {{contact.adress}}
         <br />
         電話番号
         <input type="tel" v-model.number="contact.tel" />
@@ -95,8 +100,8 @@
         <br />
       </form>
     </div>
+  
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
-
     <script>
       let app = new Vue({
         el: "#app",
@@ -111,6 +116,7 @@
               message: "",
               attracts: [],
               caution: false,
+              adress:''
             },
             errors: [],
             hasError:{
@@ -139,23 +145,35 @@
               if(!this.errors.length){
                   console.log("送信可能です。")
               }
+              if(this.contact.adress){
+                console.log("index_39:this.contact.adress:"+this.contact.adress)
+                const result = this.contact.adress.trim().match(/(〒[0-9]{3}-[0-9]{4})([\s\S]+)/)
+                if(!result || result.length < 3){
+                console.log("result-NG:"+result)
+                this.errors.push('住所か郵便番号が入力されていません')
+                return [this.contact.adress]
+                }
+                console.log("result-OK："+result)
+                console.log("[result[1], result[2].trim()]："+[result[1], result[2].trim()])
+                return [result[1], result[2].trim()]
+              }
               
           },
         },
         computed:{
           yourName:{
             get(){
-             return this.contact.yourName
+            return this.contact.yourName
             },
             set(value){  //geterで取得し、setterでvalueとして受け取る          
-                console.log(value);  
-               if(value.length <= 20){       
-                 this.hasError.yourName = false; 
-               }
-               else{
+                console.log("index_39:"+value);  
+              if(value.length <= 20){       
+                this.hasError.yourName = false; 
+              }
+              else{
                 this.hasError.yourName = true;    
-               }  
-               return this.contact.yourName = value     
+              }  
+              return this.contact.yourName = value     
             }
           }
         }
@@ -163,3 +181,4 @@
     </script>
   </body>
 </html>
+

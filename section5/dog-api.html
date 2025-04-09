@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vuetify2.3.10 テスト</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@5.5.55/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@2.3.10/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="css_68.css" />
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <v-app>
+        <v-app-bar app> header </v-app-bar>
+        <v-main>
+          <v-container>
+            <p class="text-h2">Sample DogApi</p>
+            <v-btn elevation="4" fab icon outlined>Type</v-btn>
+            <v-row>
+              <v-col
+                v-for="(dogType, index) in dogTypes"
+                :key="index"
+                cols="6"
+                md="4"
+              >
+                <v-btn @click.prevent="fetchDogImage(index)" color="cyan" dark>
+                  {{dogType}}
+                </v-btn>
+              </v-col>
+            </v-row>
+            <v-btn elevation="4" fab icon outlined>Image</v-btn>
+
+            <v-row v-show="isShow">
+              <v-col
+                v-for="dogImage in dogImages"
+                :key="dogImage"
+                cols="12"
+                sm="6"
+                md="4"
+              >
+                <v-card>
+                  <v-img :src="dogImage"> </v-img>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-main>
+        <v-footer> footer </v-footer>
+      </v-app>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.3.10/dist/vuetify.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+  <script>
+    new Vue({
+      el: "#app",
+      vuetify: new Vuetify(),
+      data() {
+        return {
+          dogTypes: ["akita", "beagle", "pekinese", "pug"],
+          dogUrl: "",
+          dogImages: "",
+          isShow: false,
+        };
+      },
+      methods: {
+        async fetchDogImage(index) {
+          const that = this; //Arrow function を利用したいので、thisを固定する
+          this.dogUrl = `https://dog.ceo/api/breed/${this.dogTypes[index]}/images`;
+          const response = await fetch(this.dogUrl, { method: "get" }).then(
+            (response) => {
+              if (response.ok) {
+                console.log("response:" + response);
+                that.isShow = true;
+                return response.json();
+              }
+              throw new Error("error").cathch((e) =>
+                console.log("e.message:" + e.message)
+              );
+            }
+          );
+          this.render(response);
+        },
+        render(response) {
+          //20枚より多い場合、シャッフルして20枚に削る
+          if (response.message.length > 20) {
+            /*loadashでメソッドを2つ繋げている
+            ・メソッドチェーンで繋げる場合、最後valueで取得する*/
+            this.dogImages = _(response.message).shuffle().slice(0.2).value();
+          } else {
+            //20枚より少なければシャッフル
+            this.dogImages = _.shuffle(response.message);
+          }
+          console.log("render:" + this.dogImages);
+        },
+      },
+    });
+  </script>
+</html>

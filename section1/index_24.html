@@ -9,6 +9,7 @@
   </head>
 
   <body>
+    <h1>リアクティブ（再描画）について</h1>
     リアルDOM
     <button id="realDom" onClick="btnClicked()">リアルボタン</button>
     <br />
@@ -18,6 +19,11 @@
       {{methoPrice()}} & {{methoPrice()}}
       <br />
       {{compuPrice}} & {{compuPrice}}
+      <br />
+      <button @click="reactiveAdd()">reactiveAdd</button>
+      {{reactiveTest}} || {{reactiveTest.name}}
+      <br />
+      <button @click="dataAdd()">dataAdd</button>
     </div>
     <script>
       let app = new Vue({
@@ -27,9 +33,15 @@
             price: 2,
             number: 1,
             reactiveTest: {
+              //object
               name: "TEST",
+              /* 
+              Vue.set(app.reactiveTest,"age",31)
+              console にこれを打ち込むと、リアクティブに値を追加できる
+              */
             },
             books: [
+              //配列
               {
                 id: 1,
                 title: "id1",
@@ -56,6 +68,16 @@
           methoPrice() {
             console.log("methodsです。");
             return this.price * this.number;
+          },
+          reactiveAdd() {
+            this.$set(this.reactiveTest, "sex", "Men");
+            console.log(
+              "reactiveAdd()が動いたよ:" + JSON.parse(this.reactiveTest)
+            );
+          },
+          dataAdd() {
+            this.reactiveTest = { age: 31 };
+            console.log("dataAdd()が動いたよ:" + this.reactiveTest);
           },
         },
         computed: {

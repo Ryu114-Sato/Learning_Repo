@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .red-b {
+        border: 1px red solid;
+        margin-bottom: 5%;
+      }
+      .blue-b {
+        border: 1px blue solid;
+        margin-bottom: 5%;
+      }
+      .black-b {
+        border: 1px black solid;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="counter">
+      <button @click="count++">Count is: {{ count }}</button>
+
+      <div class="red-b">
+        <h3>section1-index24.htmlを貼り付けた（つまりVue2のソース）</h3>
+        {{methoPrice()}} || {{compuPrice}}
+      </div>
+      <div class="blue-b">
+        <button @click="reactiveAdd()">reactiveAdd</button>
+        {{reactiveTest}} || {{reactiveTest.name}}
+      </div>
+      <div class="black-b">
+        <button @click="dataAdd()">dataAdd</button>
+      </div>
+
+      <div>
+        <button @click="bookAdd()">bookAdd</button>
+        <ul v-for="(book, id) in books" :key="id">
+          <li>{{book.id}}</li>
+          <li>{{book.title}}</li>
+          <li>{{book.author}}</li>
+        </ul>
+      </div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      //書き方は変更可能
+      Vue.createApp({
+        data() {
+          return {
+            count: 0,
+            price: 2,
+            number: 1,
+            reactiveTest: {
+              //object
+              name: "TEST",
+              /* 
+              Vue.set(app.reactiveTest,"age",31)
+              console にこれを打ち込むと、リアクティブに値を追加できる
+              */
+            },
+            books: [
+              //配列
+              {
+                id: 1,
+                title: "id1",
+                author: "著者名1",
+                url: "https://google.com",
+              },
+
+              {
+                id: 2,
+                title: "id2",
+                author: "著者名2",
+                url: "https://google.com",
+              },
+              {
+                id: 3,
+                title: "id3",
+                author: "著者名3",
+                url: "https://google.com",
+              },
+            ],
+          };
+        },
+        //以下はOptons API
+        methods: {
+          methoPrice() {
+            console.log("methodsです。");
+            return this.price * this.number;
+          },
+          reactiveAdd() {
+            try {
+              this.reactiveTest.profile = {
+                sex: "MEN",
+                age: 32,
+              };
+              console.log(
+                "reactiveAdd()が動いたよ:" + JSON.stringify(this.reactiveTest)
+              );
+              this.reactiveTest.name = "Ryuichi Sato";
+              this.reactiveTest.birth = "Tokyo";
+            } catch (e) {
+              console.log("catch:" + e);
+            }
+          },
+          dataAdd() {
+            this.reactiveTest.profile = {
+              name: "Yumiko ",
+              sex: "Woman",
+              age: 30,
+            };
+            console.log(
+              "Profileを上書きしました:" + JSON.stringify(this.reactiveTest)
+            );
+          },
+          bookAdd() {
+            this.books.push({
+              id: 4,
+              title: "id4",
+              author: "著者名4",
+              url: "https://google.com",
+            });
+          },
+        },
+        computed: {
+          /*  compuPrice() {
+              console.log("computedです。");
+              return this.price * this.number;
+            }, 省略した書き方を以下に記載*/
+          compuPrice: (app) => app.number * app.price,
+        },
+        watch: {
+          books: {
+            handler() {
+              /* booksのオブジェクトを監視。オブジェクトに変更が加えられると、
+                ハンドラーメソッド検知し処理が実行される */
+              console.log("booksが変更されました");
+            },
+            deep: true,
+          },
+        },
+        created() {
+          console.log("createdです");
+        },
+      }).mount("#counter");
+    </script>
+  </body>
+</html>

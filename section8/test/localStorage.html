@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h2>Books</h2>
+      <div v-for="(book, n) in books">
+        <p>
+          <span class="cat">{{ book }}</span>
+          <button @click="removeBook(n)">Remove</button>
+        </p>
+      </div>
+      <p>
+        <input v-model="newBook" />
+        <button @click="addBook">Add Book</button>
+      </p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <script>
+      const STORAEG_KEY = "books";
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            books: [],
+            newBook: null,
+            test: [],
+          };
+        },
+        mounted() {
+          if (localStorage.getItem(STORAEG_KEY)) {
+            //localstrage(key) が設定されているか
+            try {
+              //ローカルストレージキーをdataに設定
+              this.books = JSON.parse(localStorage.getItem(STORAEG_KEY));
+            } catch (e) {
+              localStorage.removeItem(STORAEG_KEY);
+            }
+          }
+        },
+        methods: {
+          addBook() {
+            if (!this.newBook) {
+              return;
+            }
+            //booksに入力値を格納する
+            this.books.push(this.newBook);
+            this.newBook = ""; //初期化
+            this.saveBooks(); //内.保存処理呼び出し
+          },
+          removeBook(x) {
+            this.books.splice(x, 1);
+            this.saveBooks();
+            //localStorage.removeItem(key) で削除?
+          },
+          saveBooks() {
+            //ローカルストレージ保存
+            const parsed = JSON.stringify(this.books);
+            localStorage.setItem(STORAEG_KEY, parsed); //key , value
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

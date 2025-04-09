@@ -11,7 +11,7 @@
   <style>
     .target {
       transition: opacity 1s;
-      /*  opacity: とは透過度 */
+      /*  opacity: とは透過度（1sかけて透過する） */
     }
     .target.is-hidden {
       opacity: 0;
@@ -23,7 +23,12 @@
     <br />
 
     <button id="is-show">JS表示/非表示</button>
-    <div id="target" class="target">JS表示されています</div>
+    <div id="target" class="target">
+      <ol>
+        <li>classList.toggle() はクラスを付与したり、消したりできる</li>
+        <li>is-hidden クラスを付与して、opacity:0にして透過させる</li>
+      </ol>
+    </div>
 
     <br />
 
@@ -32,7 +37,7 @@
       <button @click="isShow = !isShow">Vue表示/非表示</button>
       <!-- isShowのtrue/falseを入れ替える事ができる書き方 -->
       <transition name="fade">
-        <div v-show="isShow">Vue表示されています</div>
+        <div v-show="isShow">transition タグでぼんやり表示させる</div>
       </transition>
     </div>
     <script>
@@ -41,7 +46,6 @@
 
       isShow.addEventListener("click", () => {
         target.classList.toggle("is-hidden");
-        //classList.toggle() はクラスを付与したり、消したりできる
       });
 
       let app = new Vue({

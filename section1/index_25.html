@@ -13,24 +13,35 @@
     <br />
 
     仮想DOM
-    <div id="app">DOMアクセス</div>
-
+    <div id="app">
+      <div>DOMアクセス</div>
+      {{test}}
+      <br />
+      {{next}}
+    </div>
     <script>
       let app = new Vue({
         el: "#app",
         data() {
           return {
-            test: "あああ",
+            test: "あああ、testだよ",
+            next: "",
           };
         },
         created() {
-          console.log("created");
-          console.log(this.$el); //DOMにはアクセスできない
-          console.log(this.test); //インスタンスにはアクセスできている
+          /* 非同期通信でデータを取得したい時 */
+          console.log("createdだよ");
+          console.log("this.$el: " + this.$el); //DOMにはアクセスできない
+          console.log("this.test" + this.test); //インスタンスにはアクセスできている
         },
         mounted() {
-          console.log("mounted");
-          console.log(this.$el);
+          console.log("mountedだよ");
+          console.log("this.$el: " + this.$el);
+          console.log("this.test" + this.test);
+          this.$nextTick(function () {
+            this.next =
+              "ビュー全体がレンダリングされるまで待つ場合はmountedではなく、nextTickを使うよ";
+          });
         },
       });
     </script>

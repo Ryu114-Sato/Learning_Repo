@@ -32,6 +32,8 @@ export default new Vuex.Store({
       state.count += payload.value
     }
   },
+
+  
   actions: {
     //  incrementAction( context ){
     //    context.commit('increment')

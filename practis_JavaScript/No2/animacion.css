@@ -1,0 +1,32 @@
+#monkey {
+  width: 100px;
+  height: 100px;
+  animation: rainbow 5s infinite;
+}
+/*虹色のアニメーション*/
+@keyframes rainbow {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+#fish {
+  width: 10px;
+  height: 10px;
+  animation: swim 10s infinite;
+}
+
+@keyframes swim {
+  0% {
+    transform: translateX(0px);
+  }
+  /* 100% {
+    transform: translateX(100px);
+  } */
+  50% {
+    transform: translateX(100vh);
+  }
+}

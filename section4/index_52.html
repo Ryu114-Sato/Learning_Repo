@@ -27,13 +27,14 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
     <script>
       let myComponent = {
+        //コンポ側の設定（子）
         template: `<div>
           あああ
           {{getTitle}}
           <div v-show="isShow">表示</div>
           </div>`,
         props: {
-          //子側
+          //子側　基本的には親から渡ってきた値を受け取るだけなので定義のみを書く
           title: {
             type: String,
           },
@@ -51,6 +52,7 @@
       };
 
       let app = new Vue({
+        //コンポ使用する側（親）
         el: "#app",
         components: {
           myComponent,

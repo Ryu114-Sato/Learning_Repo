@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>スプレッド構文テストです</div>
+  </body>
+</html>
+<script>
+  const obj = {
+    a: 1,
+    b: 2,
+    test() {
+      console.log("test_section9/spread");
+    },
+  };
+
+  console.log(obj);
+  /*
+    ・spreadは拡げるという意味
+    ・オブジェクトや配列を...で格納できる
+    */
+  const spread = {
+    ...obj,
+    c: 3,
+  };
+
+  console.log(spread);
+</script>
