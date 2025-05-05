@@ -69,9 +69,13 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - ローカルの「main」ブランチをリモートの「origin」リポジトリにプッシュし、今後のプッシュ・プルの対象として追跡関係を設定します。
   （これにより、リモートにも初回のコミット内容が反映されます。）
 
+- git branch
+
+  - Local branch list view .
+
 - git branch leaning_202505
 
   - create brantch .
 
-- git checkout feature_202504
+- git checkout leaning_202505_v1
   - change another brantch .
