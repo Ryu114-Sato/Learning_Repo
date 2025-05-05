@@ -52,7 +52,7 @@
           checkEvent(e) {
             //引数にeと書くとイベントオブジェクトを取得できる
             console.log(e);
-            this.itemEvent = e;
+            this.itemEvent = JSON.stringify(e);
           },
         },
       });

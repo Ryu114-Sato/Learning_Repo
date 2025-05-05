@@ -1,8 +1,10 @@
 <template>
   <div class="relative">
     <button @click="modalOpen = true">モーダル</button>
-    <teleport to='body' >
-    <div v-if="modalOpen" class="modal">
+    <teleport to="body">
+      <div v-if="modalOpen"
+           class="modal"
+      >
         <div>
             <p>モーダルウィンドウ</p>
             <button @click="modalOpen = false">close</button>
