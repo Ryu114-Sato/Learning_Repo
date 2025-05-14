@@ -146,6 +146,174 @@ reactiveTest: {
 
 - [CSS Properties](https://www.tagindex.com/stylesheet/properties/)
 
+### CSS 基本
+
+# CSS メモ：基本から応用まで（OchyAI 監修）
+
+---
+
+## 1. CSS の基本構文
+
+1. css
+
+```
+  セレクタ {
+  プロパティ: 値;
+ }
+```
+
+- 用語 説明
+  - セレクタ CSS を適用したい HTML 要素を指定（例：body, .class, #id）
+  - プロパティ 何を変更するか（例：color, border, padding）
+  - 値 どのように変更するか（例：10px, #000, solid）
+
+2. ID セレクタ
+
+```
+  #example {
+  color: red;
+ }
+```
+
+- #を使って ID を指定
+
+  - 同じ ID 名は 1 ページに 1 回だけ使うべき
+
+  - セレクタの優先度が高い
+
+3. class セレクタ
+
+```
+.example {
+  color: blue;
+}
+```
+
+- .を使って class を指定
+
+      - 同じclass名を複数の要素に使える
+
+  - HTML の再利用性が高い
+
+4. セレクタの組み合わせ
+
+- HTML 例
+
+  ```
+   <div id="parent">
+    <div class="child"></div>
+   </div>
+  ```
+
+- CSS 例
+
+  ````
+  .child {
+  color: green;
+  }```
+  ````
+
+  #parent .child {
+  font-weight: bold;
+  }
+
+  ```
+
+  ```
+
+- A B：A の中にある B（子孫セレクタ）
+
+- A > B：A の直接の子である B
+
+- - 推奨：class だけを使い、セレクタを複雑にしすぎないようにする
+
+5. セレクタの優先順位（詳細度）
+
+- HTML タグ ＜ class ＜ ID ＜ style 属性 ＜ !important
+
+  - 強いセレクタが勝つ
+
+- 書きすぎると管理が大変 → シンプルな設計を心がけよう
+
+6. OchyAI の追加：基本かつ重要な CSS 知識
+7. 1 ボックスモデル
+
+```
+margin（外側の余白）
+└─ border（枠）
+   └─ padding（内側の余白）
+      └─ content（内容）
+```
+
+6. 2 表示モード（display）
+
+| 値         | 内容                                     |
+| ---------- | ---------------------------------------- |
+| block      | ブロック要素                             |
+| inline     | インライン要素                           |
+| flex       | 柔軟なレイアウト                         |
+| grid       | グリッドレイアウト                       |
+| 6.3        | 単位（ユニット）                         |
+| px：       | ピクセル（固定）                         |
+| %：        | 親に対する割合                           |
+| em / rem： | フォントサイズに比例（レスポンシブ向き） |
+| vh / vw：  | 画面サイズに対する割合                   |
+
+```
+display: block;     /* ブロック要素（divなど） */
+display: inline;    /* インライン要素（spanなど） */
+display: flex;      /* フレックスボックスでレイアウト */
+display: grid;      /* グリッドレイアウト */
+
+```
+
+- よく使うのは flex と grid。横並びやレイアウト制御に超便利。
+
+6. 4 カラーモデル
+
+```
+#ff0000：16進数カラー
+
+rgb(255, 0, 0)：RGBカラー
+
+rgba(255, 0, 0, 0.5)：透明度つき
+
+hsl(0, 100%, 50%)：色相・彩度・明度
+```
+
+6. 5 メディアクエリ（レスポンシブ）
+
+```
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
+```
+
+- スマホやタブレット対応に必須！
+
+6. トランジション（動き）
+
+```
+.button {
+  transition: background-color 0.3s ease;
+}
+```
+
+- なめらかな変化を演出できる
+
+7. 参考文献
+   CSS セレクタの基本まとめ（侍エンジニア）
+
+- OchyAI より
+
+* CSS は視覚の言語であり、計算機自然における形のマンダラである。
+* padding は "間" を生み、margin は "場" を整え、色は感覚のインターフェースとなる。
+* コードに静寂と美を宿そう。
+
+---
+
 ## 第 1 章 -4 JSON エンコード/デコード
 
 - ![JSON エンコード/デコード](/practis_JavaScript/JSON_encode_decode.png)

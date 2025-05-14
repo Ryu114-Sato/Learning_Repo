@@ -17,7 +17,7 @@
 
 上記がこの開発を実施するスコープとなる。
 
-## 詳細設計書
+## 基本設計 / 画面遷移
 
 1. 画面ラインナップ 及びその説明
 
@@ -25,10 +25,10 @@
 
       - 機能サンプル
 
-      - [sample_vuetify](../section5/login-sample1.html)
-      - [sample_promise](../section3/promise_test.html)
-      - [sample_validate](../section3/index_39.html)
-      - [sample_db](../section8/test/localStorage.html)
+        - [sample_vuetify](../section5/login-sample1.html)
+        - [sample_promise](../section3/promise_test.html)
+        - [sample_validate](../section3/index_39.html)
+        - [sample_db](../section8/test/localStorage.html)
 
       1. 介護タクシー手配トップ画面
 
@@ -38,12 +38,12 @@
              - C1001 というユーザは flg :C
              - U1001 というユーザーは flg :U
 
-         1. SCD 設定画面
+         1. 介護タクシー手配 設定画面
 
-         - 手配車者の予定を入力する :vuetify で calender API を使用する
-           - 予約者は手配者の予定を確認可能
+         - 各介護タクシー事業者の予定を入力する :vuetify で calender API を使用する
+           - ユーザー（予約者）は各介護タクシー事業者の予定を確認可能
 
-         2. 受け入れ先病院の要否確認 及び予約　画面
+         2. 受け入れ先病院の受け入れ可否確認 及び予約　画面
 
          3. 各種申請画面
 
@@ -91,7 +91,7 @@
 
     1.  バージョン / ソース 管理
 
-        - git
+        - github
 
     2.  言語
 
@@ -108,5 +108,11 @@
 
     2.  言語
 
-        - MySQL
+        - MySQL or Dynamo DB
         - Node.js (API エンドポイント)
+
+# 3 章　 Task
+
+1.  FE
+
+- 全ての画面を Vuetify で修正する（品質向上のため）
